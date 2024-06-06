@@ -1,4 +1,4 @@
-<%@ page import="com.example.resumeweb.bean.User" %><%--
+<%@ page import="com.example.resumeweb.Data.bean.User" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 05-Jun-24

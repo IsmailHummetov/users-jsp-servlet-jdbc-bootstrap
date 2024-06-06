@@ -1,6 +1,6 @@
-package com.example.resumeweb.dao.inter;
+package com.example.resumeweb.Data.dao.inter;
 
-import com.example.resumeweb.bean.Skill;
+import com.example.resumeweb.Data.bean.Skill;
 
 import java.util.List;
 

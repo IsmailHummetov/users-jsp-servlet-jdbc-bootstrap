@@ -1,7 +1,7 @@
-package com.example.resumeweb.main;
+package com.example.resumeweb.Data.main;
 
-import com.example.resumeweb.dao.impl.*;
-import com.example.resumeweb.dao.inter.*;
+import com.example.resumeweb.Data.dao.impl.*;
+import com.example.resumeweb.Data.dao.inter.*;
 
 public class Context {
     public static UserDaoInter instanceUserDao() {

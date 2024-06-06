@@ -1,8 +1,8 @@
 package com.example.resumeweb.Controller;
 
-import com.example.resumeweb.bean.User;
-import com.example.resumeweb.dao.inter.UserDaoInter;
-import com.example.resumeweb.main.Context;
+import com.example.resumeweb.Data.bean.User;
+import com.example.resumeweb.Data.dao.inter.UserDaoInter;
+import com.example.resumeweb.Data.main.Context;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

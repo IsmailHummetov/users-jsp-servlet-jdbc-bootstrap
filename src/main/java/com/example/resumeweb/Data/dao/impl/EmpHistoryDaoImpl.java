@@ -1,11 +1,11 @@
-package com.example.resumeweb.dao.impl;
+package com.example.resumeweb.Data.dao.impl;
 
-import com.example.resumeweb.bean.EmpHistory;
-import com.example.resumeweb.bean.User;
-import com.example.resumeweb.dao.inter.AbstractDao;
-import com.example.resumeweb.dao.inter.EmpHistoryDaoInter;
-import com.example.resumeweb.dao.inter.UserDaoInter;
-import com.example.resumeweb.main.Context;
+import com.example.resumeweb.Data.bean.EmpHistory;
+import com.example.resumeweb.Data.bean.User;
+import com.example.resumeweb.Data.dao.inter.AbstractDao;
+import com.example.resumeweb.Data.dao.inter.EmpHistoryDaoInter;
+import com.example.resumeweb.Data.dao.inter.UserDaoInter;
+import com.example.resumeweb.Data.main.Context;
 
 import java.sql.*;
 import java.util.ArrayList;

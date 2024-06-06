@@ -1,6 +1,6 @@
-<%@ page import="com.example.resumeweb.dao.inter.UserDaoInter" %>
-<%@ page import="com.example.resumeweb.main.Context" %>
-<%@ page import="com.example.resumeweb.bean.User" %>
+<%@ page import="com.example.resumeweb.Data.dao.inter.UserDaoInter" %>
+<%@ page import="com.example.resumeweb.Data.main.Context" %>
+<%@ page import="com.example.resumeweb.Data.bean.User" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: user
@@ -32,6 +32,8 @@
 <%
     List<User> users = (List<User>) request.getAttribute("users");
 %>
+<%=request.getRequestURI().contains("/login")%>
+<%=request.getSession().getAttribute("test")%>
 <div class="container mycontainer">
     <form action="users" method="get">
         <div class="row">

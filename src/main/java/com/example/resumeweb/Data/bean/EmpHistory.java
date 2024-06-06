@@ -1,4 +1,4 @@
-package com.example.resumeweb.bean;
+package com.example.resumeweb.Data.bean;
 
 import java.sql.Date;
 

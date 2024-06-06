@@ -1,9 +1,9 @@
-package com.example.resumeweb.dao.impl;
+package com.example.resumeweb.Data.dao.impl;
 
-import com.example.resumeweb.bean.Country;
-import com.example.resumeweb.bean.User;
-import com.example.resumeweb.dao.inter.AbstractDao;
-import com.example.resumeweb.dao.inter.UserDaoInter;
+import com.example.resumeweb.Data.bean.Country;
+import com.example.resumeweb.Data.bean.User;
+import com.example.resumeweb.Data.dao.inter.AbstractDao;
+import com.example.resumeweb.Data.dao.inter.UserDaoInter;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -118,6 +118,25 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
             ex.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public String getPasswordByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE email=?";
+        String password = null;
+        try(Connection c = connection()){
+            PreparedStatement stmt  = c.prepareStatement(sql);
+            stmt.setString(1,email);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()){
+                password = rs.getString("password");
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return password;
     }
 
     @Override

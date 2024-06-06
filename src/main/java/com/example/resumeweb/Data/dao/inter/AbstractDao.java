@@ -1,4 +1,4 @@
-package com.example.resumeweb.dao.inter;
+package com.example.resumeweb.Data.dao.inter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.example.resumeweb.bean;
+package com.example.resumeweb.Data.bean;
 
 import java.sql.Date;
 
@@ -7,6 +7,7 @@ public class User {
     String firstname;
     String lastname;
     String email;
+    String password;
     String phone;
     String ProfileDescription;
     Date BirthDate;
@@ -57,6 +58,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Country getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(Country birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
     public String getPhone() {

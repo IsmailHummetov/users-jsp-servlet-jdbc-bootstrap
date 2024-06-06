@@ -1,8 +1,8 @@
-package com.example.resumeweb.dao.impl;
+package com.example.resumeweb.Data.dao.impl;
 
-import com.example.resumeweb.bean.Country;
-import com.example.resumeweb.dao.inter.AbstractDao;
-import com.example.resumeweb.dao.inter.CountryDaoInter;
+import com.example.resumeweb.Data.bean.Country;
+import com.example.resumeweb.Data.dao.inter.CountryDaoInter;
+import com.example.resumeweb.Data.dao.inter.AbstractDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
