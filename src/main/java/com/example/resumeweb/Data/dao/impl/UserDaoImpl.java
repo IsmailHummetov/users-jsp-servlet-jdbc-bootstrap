@@ -1,5 +1,6 @@
 package com.example.resumeweb.Data.dao.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.resumeweb.Data.bean.Country;
 import com.example.resumeweb.Data.bean.IdPassword;
 import com.example.resumeweb.Data.bean.User;
@@ -16,6 +17,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         String firstname = rs.getString("firstname");
         String lastname = rs.getString("lastname");
         String email = rs.getString("email");
+        String password = rs.getString("password");
         String phone = rs.getString("phone");
         String ProfileDescription = rs.getString("profile_description");
         Date BirthDate = rs.getDate("birth_date");
@@ -27,6 +29,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         Country birthplace = new Country(birthPlaceID, birthPlaceName, null);
         Country nationality = new Country(nationalityID, null, nationalityName);
         User u = new User(id, firstname, lastname, email, phone, ProfileDescription, BirthDate, birthplace, nationality, address);
+        u.setPassword(password);
         return u;
     }
 
@@ -55,7 +58,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         return result;
     }
 
-    public List<User> getByNameSurname(String firstname,String lastname) {
+    public List<User> getByNameSurname(String firstname, String lastname) {
         List<User> result = new ArrayList<>();
         String sql = "SELECT\n" +
                 "\t`user`.*,\n" +
@@ -67,19 +70,19 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
                 "\tLEFT JOIN country AS n ON n.id = `user`.nationality " +
                 "WHERE 1=1";
         try (Connection c = connection()) {
-            if (firstname!=null && !firstname.trim().isEmpty())
-                sql+=" and `user`.firstname=?";
-            if (lastname!=null && !lastname.trim().isEmpty())
-                sql+=" and `user`.lastname=?";
+            if (firstname != null && !firstname.trim().isEmpty())
+                sql += " and `user`.firstname=?";
+            if (lastname != null && !lastname.trim().isEmpty())
+                sql += " and `user`.lastname=?";
             PreparedStatement stmt = c.prepareStatement(sql);
 
-            int i=1;
-            if (firstname!=null && !firstname.trim().isEmpty()){
-                stmt.setString(i,firstname);
+            int i = 1;
+            if (firstname != null && !firstname.trim().isEmpty()) {
+                stmt.setString(i, firstname);
                 i++;
             }
-            if (lastname!=null && !lastname.trim().isEmpty()){
-                stmt.setString(i,lastname);
+            if (lastname != null && !lastname.trim().isEmpty()) {
+                stmt.setString(i, lastname);
                 i++;
             }
             stmt.execute();
@@ -125,40 +128,45 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     public IdPassword getPasswordByEmail(String email) {
         String sql = "SELECT * FROM user WHERE email=?";
         String password = null;
-        Integer id=null;
-        try(Connection c = connection()){
-            PreparedStatement stmt  = c.prepareStatement(sql);
-            stmt.setString(1,email);
+        Integer id = null;
+        try (Connection c = connection()) {
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setString(1, email);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
-            while (rs.next()){
+            while (rs.next()) {
                 password = rs.getString("password");
-                id=rs.getInt("id");
+                id = rs.getInt("id");
             }
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new IdPassword(password,id);
+        return new IdPassword(password, id);
     }
 
 
     @Override
     public boolean addUser(User user) {
-        String sql = "INSERT INTO USER ( firstname, lastname, email, phone, profile_description, birth_date, birth_place, nationality, address )\n" +
+        String sql = "INSERT INTO USER ( firstname, lastname, email,password, phone, profile_description, birth_date, birth_place, nationality, address )\n" +
                 "VALUES\n" +
-                "\t(?,?,?,?,?,?,?,?,?)";
+                "\t(?,?,?,?,?,?,?,?,?,?)";
         try (Connection c = connection()) {
+
+            String password = user.getPassword();
+            BCrypt.Hasher bCrypt = BCrypt.withDefaults();
+            String newPassword = bCrypt.hashToString(4, password.toCharArray());
+            user.setPassword(newPassword);
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setString(1, user.getFirstname());
             stmt.setString(2, user.getLastname());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPhone());
-            stmt.setString(5, user.getProfileDescription());
-            stmt.setDate(6, user.getBirthDate());
-            stmt.setInt(7, user.getbirthPlace().getId());
-            stmt.setInt(8, user.getNationality().getId());
-            stmt.setString(9, user.getAddress());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getPhone());
+            stmt.setString(6, user.getProfileDescription());
+            stmt.setDate(7, user.getBirthDate());
+            stmt.setInt(8, user.getbirthPlace().getId());
+            stmt.setInt(9, user.getNationality().getId());
+            stmt.setString(10, user.getAddress());
             stmt.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
