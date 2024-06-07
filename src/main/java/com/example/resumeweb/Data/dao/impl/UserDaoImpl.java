@@ -1,6 +1,7 @@
 package com.example.resumeweb.Data.dao.impl;
 
 import com.example.resumeweb.Data.bean.Country;
+import com.example.resumeweb.Data.bean.IdPassword;
 import com.example.resumeweb.Data.bean.User;
 import com.example.resumeweb.Data.dao.inter.AbstractDao;
 import com.example.resumeweb.Data.dao.inter.UserDaoInter;
@@ -121,9 +122,10 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     }
 
     @Override
-    public String getPasswordByEmail(String email) {
+    public IdPassword getPasswordByEmail(String email) {
         String sql = "SELECT * FROM user WHERE email=?";
         String password = null;
+        Integer id=null;
         try(Connection c = connection()){
             PreparedStatement stmt  = c.prepareStatement(sql);
             stmt.setString(1,email);
@@ -131,13 +133,15 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
             ResultSet rs = stmt.getResultSet();
             while (rs.next()){
                 password = rs.getString("password");
+                id=rs.getInt("id");
             }
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
-        return password;
+        return new IdPassword(password,id);
     }
+
 
     @Override
     public boolean addUser(User user) {

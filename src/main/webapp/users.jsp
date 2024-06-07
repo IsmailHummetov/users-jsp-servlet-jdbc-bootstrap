@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="assets/css/usertamplate.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="assets/js/user.js"></script>
     <script src="https://kit.fontawesome.com/aec1554bc2.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -31,10 +34,17 @@
 <body>
 <%
     List<User> users = (List<User>) request.getAttribute("users");
+    User user = (User) request.getSession().getAttribute("loggedInUser");
 %>
-<%=request.getRequestURI().contains("/login")%>
-<%=request.getSession().getAttribute("test")%>
 <div class="container mycontainer">
+    Welcome, <%=user.getFirstname()%>
+    <form action="logout" method="post">
+        <div style="position: absolute;top: 8px;right: 16px;">
+            <button class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+            </button>
+        </div>
+    </form>
     <form action="users" method="get">
         <div class="row">
             <div class="form-group col-4">

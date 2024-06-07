@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebFilter(filterName = "JspFilter", urlPatterns = {"*"})
+@WebFilter(filterName = "SecurityFilter", urlPatterns = {"*"})
 public class SecurityFilter implements Filter {
 
     @Override
@@ -15,8 +15,8 @@ public class SecurityFilter implements Filter {
         try {
             HttpServletResponse res = (HttpServletResponse) response;
             HttpServletRequest req = (HttpServletRequest) request;
-            if (!req.getRequestURI().contains("login") && req.getSession().getAttribute("test") == null) {
-                ControllerUtil.errorPage(res,new IllegalArgumentException("Not found!!!"));
+            if (!req.getRequestURI().contains("login") && req.getSession().getAttribute("loggedInUser") == null) {
+                res.sendRedirect("login");
             } else {
                 filterChain.doFilter(request, response);
             }

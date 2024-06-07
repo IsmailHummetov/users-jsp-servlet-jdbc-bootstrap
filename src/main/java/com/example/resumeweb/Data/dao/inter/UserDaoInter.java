@@ -1,5 +1,6 @@
 package com.example.resumeweb.Data.dao.inter;
 
+import com.example.resumeweb.Data.bean.IdPassword;
 import com.example.resumeweb.Data.bean.User;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface UserDaoInter {
 
     User getbyId(int UserId);
 
-    String getPasswordByEmail(String email);
+    IdPassword getPasswordByEmail(String email);
 
     boolean addUser(User user);
 
